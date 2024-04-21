@@ -121,10 +121,11 @@ void lab3()
                 break;
             }case 'D': {
 
-                static bool isButtonPressed = false;
-                static float lastDebounceTime = 0;
-                static int buttonState = 0;
-                controllerInstance.get_button(controllerInstance.GPIO_PIN2_INPUT);
+                //controllerInstance.get_button(controllerInstance.GPIO_PIN2_INPUT);
+                controllerInstance.get_button(2);
+                break;
+            }case 'E': {
+                controllerInstance.get_button(controllerInstance.GPIO_PIN21_INPUT);
                 //controllerInstance.get_button(controllerInstance.GPIO_PIN16_INPUT);
                 break;
             }case 'A': {

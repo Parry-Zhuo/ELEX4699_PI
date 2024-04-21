@@ -615,7 +615,6 @@ void CRecyclingSort::update() {
                 std::cout << "Get bin 2 " << std::to_string(_ball2Count) << "\n";
                 server.send_string(std::to_string(_ball2Count));
                 //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
-
                 //vid_mutex.unlock();
             }else{
               std::cout << "\nServer Rx: " << cmds.at(i);

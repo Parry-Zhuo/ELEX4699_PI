@@ -12,6 +12,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Serial.h"
+#include <vector>
 
 
  /**
@@ -28,7 +29,7 @@
 class CControl {
 private:
 //    Serial _com; ///< Serial communication port object for interfacing with hardware.
-    enum ledStateTHING { ledON = 0, ledOFF };//need to add into get_Data
+
     enum typeEnum { DIGITAL = 0, ANALOG, SERVO };//need to add into get_Data
 
 
@@ -39,6 +40,9 @@ private:
     bool outputButton1 = 0;
     bool outputButton2 = 0;
     bool outputButton3 = 0;
+    /*To be destroyed later*/
+
+    /*To be destroyed later*/
 
     bool threadExit = true;
 
@@ -137,15 +141,30 @@ public:
      */
     void servoControl(int inputChannel, int angle);
 
-    int GPIO_PIN2_INPUT ;
-    int GPIO_PIN3_OUTPUT;
-    int GPIO_PIN4_ANALOG;
     int GPIO_PIN5_ANALOG;
 
-    int GPIO_PIN16_INPUT;
-    int GPIO_PIN20_INPUT;
-    int GPIO_PIN21_INPUT;
+    int GPIO_PIN3_OUTPUT = 3;
+    int GPIO_PIN4_ANALOG = 17;
 
+    int GPIO_PIN2_INPUT = 2;
+    int GPIO_PIN16_INPUT = 16;
+    int GPIO_PIN20_INPUT = 20;
+    int GPIO_PIN21_INPUT = 21;
+    int debounceDelay = 10;
+    enum ledStateENUM{ ledON = 0, ledOFF };//need to add into get_Data
     int handle ;
+
+    ;//extern  tells the compiler that the array is defined elsewhere, avoiding multiple definitions and linkage errors.
+    struct buttonStruct{
+        //int channel = 0;//not needed as it is the index
+        float lastDebounceTime = 0;
+        int lastState = ledOFF;
+        int buttonCount = 0;//for now it is nothing, just incase.
+        int output = ledOFF;
+        int buttonState = ledOFF;// may need to create new definition variable!
+    };
+    std::vector<buttonStruct> buttonVector;
+    std::vector<int> inputPinVector;
+
 };
 

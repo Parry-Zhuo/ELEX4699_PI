@@ -25,69 +25,27 @@ CControl::CControl() {
     }else{
         std::cout << "GPIO SUCCESS Inside CCONTROL CLASS \n\n\n";
 
-        GPIO_PIN2_INPUT = 2;
-        GPIO_PIN3_OUTPUT = 3;
-        GPIO_PIN4_ANALOG = 17;
 
-        GPIO_PIN16_INPUT = 16;
-        GPIO_PIN20_INPUT = 20;
-        GPIO_PIN21_INPUT = 21;
 
         gpioSetMode(GPIO_PIN3_OUTPUT, PI_OUTPUT); // Setup PINOUT1 as Output
-        gpioSetMode(GPIO_PIN2_INPUT, PI_INPUT); // Setup PININ1 as Input
-
-        gpioSetMode(GPIO_PIN16_INPUT, PI_INPUT);
-        gpioSetMode(GPIO_PIN20_INPUT, PI_INPUT);
-        gpioSetMode(GPIO_PIN21_INPUT, PI_INPUT);
-
         gpioSetMode(GPIO_PIN4_ANALOG, PI_OUTPUT);
-        /*
-        gpioWrite(PINOUT1, 0);
-            */
+
+
+        gpioSetMode(12, PI_INPUT);
+        inputPinVector = {2,16,20,21};
+        for(int x = 0;x< inputPinVector.size();x++){//set inputs
+            gpioSetMode(x, PI_INPUT);
+        }
+        for(int x = 0;x< inputPinVector.size();x++){//set inputs
+            gpioSetPullUpDown(x, PI_PUD_UP);
+        }
+        buttonVector = std::vector<buttonStruct>(30);
+
+
         gpioWrite(GPIO_PIN3_OUTPUT, 0);
 
 
-        gpioSetPullUpDown(GPIO_PIN2_INPUT, PI_PUD_DOWN);
-
-        gpioSetPullUpDown(GPIO_PIN16_INPUT, PI_PUD_DOWN);
-        gpioSetPullUpDown(GPIO_PIN20_INPUT, PI_PUD_DOWN);
-        gpioSetPullUpDown(GPIO_PIN21_INPUT, PI_PUD_DOWN);
-
-//        int in = gpioRead(GPIO_PIN2_INPUT); // 1 implies on
-
-        /*
-        Initialize SPI
-        */
-
         handle = spiOpen(0, 200000, 3); // Mode 0, 200kHz
-
-        //spiClose(handle); // Close SPI system
-
-
-
-        /*
-        int read_val;
-        unsigned char inBuf[3];
-        char cmd[] = { 1, 128, 0 }; // 0b1XXX0000 where XXX=channel 0
-        handle = spiOpen(1, 200000, 3);
-        if (handle < 0)
-        {
-            std::cout << "Failed to open SPI connection" << std::endl;
-        }
-        else{
-            std::cout << "OPENED" << std::endl;
-        }
-        spiXfer(handle, cmd, (char*) inBuf, 3); // Transfer 3 bytes
-        read_val = ((inBuf[1] & 3) << 8) | inBuf[2]; // Format 10 bits
-
-        std::cout<<"analog value: " << read_val << "\n";
-        */
-
-
-
-
-      //  std::cout<<in << "first: \n";
-        //gpioTerminate();
     }
 }
 CControl::~CControl() {
@@ -169,36 +127,29 @@ bool CControl::set_data(int type, int channel, int val) {
     return true;
 }
 
-enum ledStateENUM { ledON = 0, ledOFF };//need to add into get_Data
 int CControl::get_button(int channel) {
-	static int result;
-	static int output;//determines the state
-	//float start_time = 0;
-	static float lastDebounceTime = 0;
-	static int buttonState; // Current readin
-	//g from the button
-	static int lastButtonState = ledOFF; // Previous state of the button
-	static int debounceDelay = 10;
-	int timeout = 1000;
-	static int count = 0;
-	get_data(DIGITAL, channel, result); // initial detection of button press
-	if (result != lastButtonState) {
-		lastDebounceTime = float(cv::getTickCount()) / cv::getTickFrequency() * 1000;
-	}
-	if ((float(cv::getTickCount()) / cv::getTickFrequency() * 1000) - lastDebounceTime > debounceDelay) {
-		if (result != buttonState) {
-			buttonState = result;
-			if (buttonState == ledON) {
+    int result;
+    get_data(DIGITAL,channel, result);
+    buttonStruct currentButton = buttonVector.at(channel);//button struct was not properly defined...
+    std::cout << "RESULT: " << result  << "\n";
+    if(result != currentButton.lastState){
+        buttonVector.at(channel).lastDebounceTime = float(cv::getTickCount()) / cv::getTickFrequency() * 1000;
+    }
+	if ((float(cv::getTickCount()) / cv::getTickFrequency() * 1000) - currentButton.lastDebounceTime > debounceDelay) {
+		if (result != currentButton.lastState) {// we may want to just simply remove this.
+			buttonVector.at(channel).buttonState = result;
+			if (buttonVector.at(channel).buttonState == ledON) {
 				//button has been stabilized
-				output ^= 1;
-				count++;
-				std::cout << "BUTTON TEST : " << count << "\n";
+				buttonVector.at(channel).output ^= 1;
+				buttonVector.at(channel).buttonCount++;
+
 			}
 		}
 	}
-	lastButtonState = result;
-	return output;
+	buttonVector.at(channel).lastState = result;
+	return buttonVector.at(channel).output;
 }
+
 int CControl::get_button2(int channel) {
     //std::cout<<"button 2: "<< "\n";
 	static int result;

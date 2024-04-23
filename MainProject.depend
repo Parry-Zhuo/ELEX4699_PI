@@ -4,7 +4,7 @@
 	"CBase4618.h"
 	<opencv2/highgui.hpp>
 
-1713741691 /home/parry/Documents/MainProject/CControler.h
+1713863192 /home/parry/Documents/MainProject/CControler.h
 	"stdafx.h"
 	"Serial.h"
 	<vector>
@@ -725,4 +725,24 @@
 	<opencv2/opencv.hpp>
 	<opencv2/opencv.hpp>
 	<X11/Xlib.h>
+
+1713857821 source:/home/parry/Documents/MainProject/CMotor.cpp
+	"CMotor.h"
+	"CControler.h"
+
+1713862116 /home/parry/Documents/MainProject/CMotor.h
+
+1713858214 source:/home/parry/Documents/MainProject/CGuidance.cpp
+	"CGuidance.h"
+
+1713858137 /home/parry/Documents/MainProject/CGuidance.h
+	<opencv2/opencv.hpp>
+
+1713857554 source:/home/parry/Documents/MainProject/CCar.cpp
+	"CCar.h"
+
+1713858223 /home/parry/Documents/MainProject/CCar.h
+	"server.h"
+	"CMotor.h"
+	"CGuidance.h"
 

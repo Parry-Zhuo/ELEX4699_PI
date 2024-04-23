@@ -1,6 +1,6 @@
-#include "Server.h"
-#include "Motor.h"
-#include "Guidance.h"
+#include "server.h"
+#include "CMotor.h"
+#include "CGuidance.h"
 class CCar
 {
 private:

@@ -41,6 +41,10 @@
 		<Unit filename="CBase4618.h" />
 		<Unit filename="CControler.cpp" />
 		<Unit filename="CControler.h" />
+		<Unit filename="CGuidance.cpp" />
+		<Unit filename="CGuidance.h" />
+		<Unit filename="CMotor.cpp" />
+		<Unit filename="CMotor.h" />
 		<Unit filename="CRecyclingSort.cpp" />
 		<Unit filename="CRecyclingSort.h" />
 		<Unit filename="MainProject.cbp" />

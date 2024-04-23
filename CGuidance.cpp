@@ -8,10 +8,9 @@ CGuidance::~CGuidance() {
     // Destructor implementation
 }
 
-void CGuidance::updatePosition() {
-    // Update position implementation
-}
+void CGuidance::update(){
 
-void CGuidance::calculateRoute() {
-    // Calculate route implementation
+}
+void CGuidance::get_im(cv::Mat& im){
+
 }

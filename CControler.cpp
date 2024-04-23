@@ -30,8 +30,10 @@ CControl::CControl() {
         gpioSetMode(GPIO_PIN3_OUTPUT, PI_OUTPUT); // Setup PINOUT1 as Output
         gpioSetMode(GPIO_PIN4_ANALOG, PI_OUTPUT);
 
-
-        gpioSetMode(12, PI_INPUT);
+        //GPIO 12 AND 13 ARE PWM PINS!
+        gpioSetMode(12, PI_OUTPUT);
+        gpioSetMode(13, PI_OUTPUT);
+        //gpioSetMode(12, PI_INPUT);
         inputPinVector = {2,16,20,21};
         for(int x = 0;x< inputPinVector.size();x++){//set inputs
             gpioSetMode(x, PI_INPUT);

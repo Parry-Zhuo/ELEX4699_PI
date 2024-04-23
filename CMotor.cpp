@@ -1,5 +1,5 @@
 #include "CMotor.h"
-
+#include "CControler.h"
 CMotor::CMotor() {
     // Constructor implementation
 }

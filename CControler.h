@@ -150,6 +150,10 @@ public:
     int GPIO_PIN16_INPUT = 16;
     int GPIO_PIN20_INPUT = 20;
     int GPIO_PIN21_INPUT = 21;
+
+    int GPIO_PWM1 = 13;
+    int GPIO_PWM2 = 12;
+
     int debounceDelay = 10;
     enum ledStateENUM{ ledON = 0, ledOFF };//need to add into get_Data
     int handle ;

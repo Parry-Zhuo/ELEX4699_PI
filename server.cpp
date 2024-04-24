@@ -139,7 +139,7 @@ void CServer::start(int port)
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     clientsock = accept(serversock, (struct sockaddr *) &client_addr, &addressSize);
-  //  std::cout<< "trying to accept" << "\n";
+  //  std::cout<< "trying to acceptm" << "\n";
     if (clientsock != INVALID_SOCKET)
     {
       setblocking(clientsock, false);

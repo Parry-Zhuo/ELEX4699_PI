@@ -126,7 +126,6 @@ void CRecyclingSort::drawGUI() {
     cvui::trackbar(frame, gui_position.x, gui_position.y, 180, &iHighH, 0, 180, 1, "%.0Lf", cvui::TRACKBAR_DISCRETE, 1);
     gui_position.y += 50; // Adjust spacing for the next trackbar
 
-
     cvui::text(frame, gui_position.x, gui_position.y, "Low Hue Range");
     gui_position.y += 20; // Adjust for label spacing
     cvui::trackbar(frame, gui_position.x, gui_position.y, 180, &iLowH, 0, 180, 1, "%.0Lf", cvui::TRACKBAR_DISCRETE, 1);
@@ -602,7 +601,9 @@ void CRecyclingSort::update() {
             }else if((cmds.at(i) == "s 1 2 \n") ){//sort Bin2
                 throwBin(4);
                 bin = 2;
-            }else if((cmds.at(i) == "g 1 1 \n") ){//get Bin1
+            }else if((cmds.at(i
+
+            ) == "g 1 1 \n") ){//get Bin1
                 //vid_mutex.lock();
                 //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
                 std::cout << "Get bin 1 " << std::to_string(_ball1Count) << "\n";

@@ -30,7 +30,7 @@ class CControl {
 private:
 //    Serial _com; ///< Serial communication port object for interfacing with hardware.
 
-    enum typeEnum { DIGITAL = 0, ANALOG, SERVO };//need to add into get_Data
+    enum typeEnum { DIGITAL = 0, ANALOG, SERVO,PWM };//need to add into get_Data
 
 
     int button1Count = 0;
@@ -140,7 +140,10 @@ public:
      * @param angle The desired angle to set the servo to.
      */
     void servoControl(int inputChannel, int angle);
-
+    /**
+     * @brief simpply PWM for 2 initialized channels 12 and 13
+     * @return 0 if pwm was successful, else !
+     */
     int GPIO_PIN5_ANALOG;
 
     int GPIO_PIN3_OUTPUT = 3;

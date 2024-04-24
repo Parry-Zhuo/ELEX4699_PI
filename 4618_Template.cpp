@@ -23,6 +23,10 @@
 //#include "CControler.h"
 //#include "PPong.h"
 #include "CRecyclingSort.h"
+#include "CCar.h"
+
+
+
 
 #include <thread>
 
@@ -225,7 +229,7 @@ void print_menu()
     std::cout << "\n(5) Lab 5 - Pong";
     std::cout << "\n(6) Lab 6 - Classic Arcade Game";
     std::cout << "\n(7) Lab 7 - Linux Port";
-    std::cout << "\n(8) Lab 8 - Sorting";
+    std::cout << "\n(8) Lab 8 - POTATO CAR! ";
     std::cout << "\n(9) Lab 9 - Sockets";
     std::cout << "\n(10) Test serial COM communication";
     std::cout << "\n(11) Show image manipulation";
@@ -406,7 +410,14 @@ void lab7() {
     //gandalf.do_clientserver();
     gandalf.start();
 }
-
+void picar(){
+    cv::Size canvasSize = cv::Size(300, 900);
+    //cv::Size canvasSize = cv::Size(100, 100);
+    CCar potato;
+    //gandalf.run();
+    //gandalf.do_clientserver();
+    potato.drive();
+}
 int main(int argc, char* argv[])
 {
     // generate_marks();
@@ -426,6 +437,7 @@ int main(int argc, char* argv[])
         case 5: lab5(); break;
         case 6: lab6(); break;
         case 7: lab7(); break;
+        case 8: picar(); break;
             //        case 10: test_com(); break;
             //          case 11: do_image(); break;
         case 12: do_video(); break;

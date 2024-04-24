@@ -16,7 +16,8 @@
 #include <opencv2/opencv.hpp>
 
 //#include "Serial.h"
-
+#define _pinleftPWM 12
+#define _pinrightPWM 13
 CControl::CControl() {
 
     if (gpioInitialise() < 0)
@@ -26,20 +27,19 @@ CControl::CControl() {
         std::cout << "GPIO SUCCESS Inside CCONTROL CLASS \n\n\n";
 
 
-
         gpioSetMode(GPIO_PIN3_OUTPUT, PI_OUTPUT); // Setup PINOUT1 as Output
         gpioSetMode(GPIO_PIN4_ANALOG, PI_OUTPUT);
 
         //GPIO 12 AND 13 ARE PWM PINS!
-        gpioSetMode(12, PI_OUTPUT);
-        gpioSetMode(13, PI_OUTPUT);
+        gpioSetMode(_pinleftPWM, PI_ALT0);//LEFT CHANNEL
+        gpioSetMode(_pinrightPWM, PI_ALT0);//RIGHT CHANNEL
         //gpioSetMode(12, PI_INPUT);
         inputPinVector = {2,16,20,21};
         for(int x = 0;x< inputPinVector.size();x++){//set inputs
-            gpioSetMode(x, PI_INPUT);
+            gpioSetMode(inputPinVector.at(x), PI_INPUT);
         }
         for(int x = 0;x< inputPinVector.size();x++){//set inputs
-            gpioSetPullUpDown(x, PI_PUD_UP);
+            gpioSetPullUpDown(inputPinVector.at(x), PI_PUD_UP);
         }
         buttonVector = std::vector<buttonStruct>(30);
 
@@ -78,8 +78,6 @@ bool CControl::verifyCom(int comNum, int bitRate) {
 	*/
 }
 
-
-enum typeEnum { DIGITAL = 0, ANALOG, SERVO };//need to add into get_Data
 /*This function given type(Analog,digital,servo) and channel will
 
 The getData will send data as the form
@@ -123,6 +121,14 @@ bool CControl::set_data(int type, int channel, int val) {
     }else if(type ==SERVO){
         std::cout<< "Servo called! " << val << "\n";
         gpioServo(channel,val);
+    }else if(type == PWM){
+
+        if(gpioPWM(channel, val) == 0){
+            //successful
+            std::cout<< "PWM SIGNAL WORKED" << val << "channel: "<< channel<<  "\n";
+        }else{
+            std::cout<< "UNSUCCESSUL PWM SIGNAL" << val << "channel: "<< channel << "\n";
+        }
     }else{
         return false;
     }

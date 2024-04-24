@@ -1,7 +1,10 @@
 #include "CCar.h"
+#include "CGuidance.h"
+#include "CMotor.h"
 
 CCar::CCar() {
     // Constructor implementation
+
 }
 
 CCar::~CCar() {
@@ -10,6 +13,11 @@ CCar::~CCar() {
 
 void CCar::drive() {
     // Drive implementation
+     //while(true){
+     //
+    //}
+    _motors.forwards(20000);
+    std::cout<<"potato is running\n";
 }
 
 void CCar::serverthrd(CCar* ptr) {

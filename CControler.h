@@ -172,6 +172,7 @@ public:
     };
     std::vector<buttonStruct> buttonVector;
     std::vector<int> inputPinVector;
+    std::vector<int> outputPinVector;
 
 };
 

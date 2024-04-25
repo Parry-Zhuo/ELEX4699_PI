@@ -18,6 +18,7 @@
 //#include "Serial.h"
 #define _pinleftPWM 12
 #define _pinrightPWM 13
+
 CControl::CControl() {
 
     if (gpioInitialise() < 0)
@@ -33,7 +34,19 @@ CControl::CControl() {
         //GPIO 12 AND 13 ARE PWM PINS!
         gpioSetMode(_pinleftPWM, PI_ALT0);//LEFT CHANNEL
         gpioSetMode(_pinrightPWM, PI_ALT0);//RIGHT CHANNEL
+        gpioSetPullUpDown(_pinleftPWM, PI_PUD_UP);
+        gpioSetPullUpDown(_pinrightPWM, PI_PUD_UP);
         //gpioSetMode(12, PI_INPUT);
+        int _pwmfreqleft = 25000;
+        //gpioSetPWMfrequency(_pinleftPWM, 25000);
+        gpioSetPWMfrequency(_pinleftPWM, 1000);
+        gpioSetPWMfrequency(_pinrightPWM, 1000);
+        //enable,reset,sleep,step,direction
+        outputPinVector = {5,6,19,26};
+        for(int x = 0;x< outputPinVector.size();x++){//set inputs
+            gpioSetMode(outputPinVector.at(x), PI_OUTPUT);
+        }
+
         inputPinVector = {2,16,20,21};
         for(int x = 0;x< inputPinVector.size();x++){//set inputs
             gpioSetMode(inputPinVector.at(x), PI_INPUT);
@@ -56,8 +69,6 @@ CControl::~CControl() {
     spiClose(handle); // Close SPI system
 
 }
-
-
 
 int CControl::init_com(int comport) {
 
@@ -122,7 +133,6 @@ bool CControl::set_data(int type, int channel, int val) {
         std::cout<< "Servo called! " << val << "\n";
         gpioServo(channel,val);
     }else if(type == PWM){
-
         if(gpioPWM(channel, val) == 0){
             //successful
             std::cout<< "PWM SIGNAL WORKED" << val << "channel: "<< channel<<  "\n";

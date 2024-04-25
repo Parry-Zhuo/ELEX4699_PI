@@ -31,6 +31,11 @@ void CMotor::stop() {
 }
 
 void CMotor::forwards(int time) {
+
+    /*
+    //enable,reset,sleep,step,direction
+    //outputPinVector = {5,6,13,19,26};
+    */
     // Move forward
     //_control.get_button(_control.GPIO_PIN21_INPUT);
     //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
@@ -38,7 +43,9 @@ void CMotor::forwards(int time) {
     while(finishTime >  std::chrono::system_clock::now()){
         int result = 1;
         //_control.lightsAndButtons(_control.GPIO_PIN2_INPUT,_control.GPIO_PIN3_OUTPUT, result);
-        _control.set_data(PWM,12,10);
+        _control.set_data(PWM,13,128);
+       // _control.set_data(PWM,6,200);
+        //_control.set_data(DIGITAL,5,1);//0
     }
 }
 

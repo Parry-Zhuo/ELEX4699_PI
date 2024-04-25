@@ -43,7 +43,9 @@ void CMotor::forwards(int time) {
     while(finishTime >  std::chrono::system_clock::now()){
         int result = 1;
         //_control.lightsAndButtons(_control.GPIO_PIN2_INPUT,_control.GPIO_PIN3_OUTPUT, result);
-        _control.set_data(PWM,13,128);
+        _control.set_data(PWM,_pinleftPWM,255);// we can multithread this in the future.
+        _control.set_data(PWM,_pinrightPWM,255);// forgot to test speed at 255
+
        // _control.set_data(PWM,6,200);
         //_control.set_data(DIGITAL,5,1);//0
     }
@@ -51,12 +53,21 @@ void CMotor::forwards(int time) {
 
 void CMotor::backward(int time) {
     // Move backward
+    //_control.set_data(PWM,13,255);// we can multithread this in the future.
+    //_control.set_data(PWM,12,255);// forgot to test speed at 255
+
 }
 
 void CMotor::left(int time) {
-    // Turn left
+    int timeMS = 1000;
+    //for a true 90 degree turn, we switch direction of right
+    _control.set_data(PWM,_pinleftPWM,255);// we can multithread this in the future.
+    _control.set_data(PWM,_pinrightPWM,0);// forgot to test speed at 255
+
 }
 
 void CMotor::right(int time) {
-    // Turn right
+    int timeMS = 1000;
+    _control.set_data(PWM,_pinleftPWM,0);// we can multithread this in the future.
+    _control.set_data(PWM,_pinrightPWM,255);// forgot to test speed at 255
 }

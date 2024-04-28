@@ -231,7 +231,7 @@ bool CRecyclingSort::detectYellow() {
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Point> contour;
 
-
+//get_im();
     cv::findContours(imgThresholded, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
     int maxAreaContourIdx = getMaxAreaContourId(contours);
@@ -291,7 +291,7 @@ bool CRecyclingSort::detectPink() {
         return false;
     }
     imshow("Pinkthreshold Image", imgThresholded);
-
+//update
 }
 bool CRecyclingSort::detectBlue(){
 

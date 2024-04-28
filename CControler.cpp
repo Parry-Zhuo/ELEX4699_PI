@@ -19,6 +19,9 @@
 #define _pinleftPWM 12
 #define _pinrightPWM 13
 
+#define _pinleftDIR 6
+#define _pinrightDIR 16
+
 CControl::CControl() {
 
     if (gpioInitialise() < 0)
@@ -37,10 +40,9 @@ CControl::CControl() {
         gpioSetPullUpDown(_pinleftPWM, PI_PUD_UP);
         gpioSetPullUpDown(_pinrightPWM, PI_PUD_UP);
         //gpioSetMode(12, PI_INPUT);
-        int _pwmfreqleft = 25000;
         //gpioSetPWMfrequency(_pinleftPWM, 25000);
-        gpioSetPWMfrequency(_pinleftPWM, 1000);
-        gpioSetPWMfrequency(_pinrightPWM, 1000);
+        gpioSetPWMfrequency(_pinleftPWM, 500);
+        gpioSetPWMfrequency(_pinrightPWM, 500);
         //enable,reset,sleep,step,direction
         outputPinVector = {5,6,19,26};
         for(int x = 0;x< outputPinVector.size();x++){//set inputs

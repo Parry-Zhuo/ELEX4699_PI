@@ -618,7 +618,7 @@
 	"CControler.h"
 	<opencv2/core.hpp>
 
-1714021041 source:/home/parry/Documents/MainProject/CControler.cpp
+1714094122 source:/home/parry/Documents/MainProject/CControler.cpp
 	<string>
 	<iostream>
 	<fstream>
@@ -659,7 +659,7 @@
 1608580898 /usr/include/opencv4/opencv2/core/core.hpp
 	"opencv2/core.hpp"
 
-1713921333 source:/home/parry/Documents/MainProject/4618_Template.cpp
+1714034287 source:/home/parry/Documents/MainProject/4618_Template.cpp
 	"cvui.h"
 	<string>
 	<iostream>
@@ -673,7 +673,7 @@
 	"Client.h"
 	"server.h"
 
-1713920312 source:/home/parry/Documents/MainProject/CRecyclingSort.cpp
+1714087318 source:/home/parry/Documents/MainProject/CRecyclingSort.cpp
 	"CRecyclingSort.h"
 	<opencv2/highgui.hpp>
 	"cvui.h"
@@ -727,24 +727,26 @@
 	<opencv2/opencv.hpp>
 	<X11/Xlib.h>
 
-1714020981 source:/home/parry/Documents/MainProject/CMotor.cpp
+1714255448 source:/home/parry/Documents/MainProject/CMotor.cpp
 	"CMotor.h"
 
-1713923796 /home/parry/Documents/MainProject/CMotor.h
+1714099169 /home/parry/Documents/MainProject/CMotor.h
 	"CControler.h"
 
-1713858214 source:/home/parry/Documents/MainProject/CGuidance.cpp
+1714086904 source:/home/parry/Documents/MainProject/CGuidance.cpp
 	"CGuidance.h"
 
-1713915513 /home/parry/Documents/MainProject/CGuidance.h
+1714086498 /home/parry/Documents/MainProject/CGuidance.h
 	<opencv2/opencv.hpp>
+	<vector>
+	<thread>
 
-1713923607 source:/home/parry/Documents/MainProject/CCar.cpp
+1714252089 source:/home/parry/Documents/MainProject/CCar.cpp
 	"CCar.h"
 	"CGuidance.h"
 	"CMotor.h"
 
-1713922425 /home/parry/Documents/MainProject/CCar.h
+1714086903 /home/parry/Documents/MainProject/CCar.h
 	"server.h"
 	"CMotor.h"
 	"CGuidance.h"

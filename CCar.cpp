@@ -33,6 +33,12 @@ void CCar::drive() {
     */
     cv::Size canvasSize = cv::Size(300, 900);
     _CGuidanceimage = cv::Mat::zeros(canvasSize.width/2, canvasSize.height/2, CV_8UC3);
+    std::cout<<"start the program by pressing s" << "\n";
+
+    while(_guidance.key != 's'){
+        _guidance.get_im(_CGuidanceimage);// I think i'd have to multithread this.
+    }
+    _motors.enableMotor();
     while(_guidance.key != 'q'){
 
         _guidance.get_im(_CGuidanceimage);// I think i'd have to multithread this.

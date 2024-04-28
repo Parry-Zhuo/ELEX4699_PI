@@ -18,10 +18,19 @@ CMotor::CMotor() {
     //_accelerationTable = {500,500,500,500,1000,1000,1500,1500,2000,2000};
     _lastCommand = CRY;
     _consecutiveCount = 0;
+
+    _control.set_data(DIGITAL,_control._pinEnLmotor,1);
+    _control.set_data(DIGITAL,_control._pinEnRmotor,1);
 }
 
 CMotor::~CMotor() {
     // Destructor implementation
+    _control.set_data(DIGITAL,_control._pinEnLmotor,1);
+    _control.set_data(DIGITAL,_control._pinEnRmotor,1);
+}
+void CMotor::enableMotor() {
+    _control.set_data(DIGITAL,_control._pinEnLmotor,0);
+    _control.set_data(DIGITAL,_control._pinEnRmotor,0);
 }
 void CMotor::setLeftDir(int dir) {
     _leftDIR = dir;
@@ -82,13 +91,13 @@ void CMotor::forwards(int time) {
         lagAccomodation++;
     }
     */
-    _leftPWM = 1000;
+    _leftPWM = 8000;
     _rightPWM = 8000;
-    //gpioSetPWMfrequency(_pinleftPWM, _leftPWM);
+    gpioSetPWMfrequency(_pinleftPWM, _leftPWM);
     gpioSetPWMfrequency(_pinrightPWM, _rightPWM);
 
     std::cout<<"_rightPWM: " << _rightPWM << "\n";
-    //_control.set_data(PWM,_pinleftPWM,126);// we can multithread this in the future.
+    _control.set_data(PWM,_pinleftPWM,126);// we can multithread this in the future.
     _control.set_data(PWM,_pinrightPWM,126);
        // _control.set_data(PWM,6,200);
         //_control.set_data(DIGITAL,5,1);//0
@@ -102,8 +111,8 @@ void CMotor::backward(int time) {
     setRightDir(0);
     setLeftDir(0);
 
-    _leftPWM = 500;
-    _rightPWM = 500;
+    _leftPWM = 8000;
+    _rightPWM = 8000;
     gpioSetPWMfrequency(_pinleftPWM, _leftPWM);
     gpioSetPWMfrequency(_pinrightPWM, _rightPWM);
 
@@ -118,7 +127,7 @@ void CMotor::backward(int time) {
 void CMotor::left(int time) {
     //int timeMS = 1000;
     //for a true 90 degree turn, we switch direction of right
-    _leftPWM = 500;
+    _leftPWM = 8000;
     _rightPWM = 0;
 
     gpioSetPWMfrequency(_pinleftPWM, _leftPWM);
@@ -131,7 +140,7 @@ void CMotor::left(int time) {
 void CMotor::right(int time) {
     //int timeMS = 1000;
     _leftPWM = 0;
-    _rightPWM = 500;
+    _rightPWM = 8000;
     gpioSetPWMfrequency(_pinleftPWM, _leftPWM);
     gpioSetPWMfrequency(_pinrightPWM, _rightPWM);
     _control.set_data(PWM,_pinleftPWM,0);// we can multithread this in the future.

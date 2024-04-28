@@ -170,6 +170,17 @@ public:
         int output = ledOFF;
         int buttonState = ledOFF;// may need to create new definition variable!
     };
+
+    /*@@@@@@Motor pin layout@@@@@@@@*/
+    int _pinleftPWM = 12;
+    int _pinrightPWM = 13;
+
+    int _pinleftDIR = 6;
+    int _pinrightDIR = 16;
+
+    int _pinEnRmotor = 2;
+    int _pinEnLmotor= 3;
+
     std::vector<buttonStruct> buttonVector;
     std::vector<int> inputPinVector;
     std::vector<int> outputPinVector;

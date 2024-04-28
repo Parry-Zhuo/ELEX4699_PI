@@ -43,7 +43,7 @@ public:
 	void left(int time);
 	void right(int time);
 	void cry(int time );
-
+    void enableMotor();
 	CControl _control;
 
 	std::vector<int> _accelerationTable;

@@ -44,7 +44,7 @@ CControl::CControl() {
         gpioSetPWMfrequency(_pinleftPWM, 500);
         gpioSetPWMfrequency(_pinrightPWM, 500);
         //enable,reset,sleep,step,direction
-        outputPinVector = {5,6,19,26};
+        outputPinVector = {5,6,19,26,13,2,3};
         for(int x = 0;x< outputPinVector.size();x++){//set inputs
             gpioSetMode(outputPinVector.at(x), PI_OUTPUT);
         }

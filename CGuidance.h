@@ -9,8 +9,7 @@ class CGuidance
 {
 private:
 	cv::Mat _display_im;
-	cv::VideoCapture _cap;
-
+    cv::VideoCapture vid;
 public:
 
 	CGuidance();
@@ -22,4 +21,5 @@ public:
     std::chrono::steady_clock::time_point calc_end; ///< End time point for frame calculation.
     std::chrono::milliseconds deltaT; ///< Time difference for frame rate calculation.
     char key;
+    bool isThreading;
 };

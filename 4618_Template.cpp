@@ -315,7 +315,8 @@ void do_video()
     cv::VideoCapture vid;
 
     //vid.open(0, cv::CAP_DSHOW);
-    vid.open(0);
+    vid.open(0,cv::CAP_V4L2);
+    //vid.open(0);
     bool do_canny = true;
     bool do_aruco = false;
     int canny_thresh = 30;

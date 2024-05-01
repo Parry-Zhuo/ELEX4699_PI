@@ -12,12 +12,15 @@ be set as well as incremental angles of rotation for turning
 #pragma once
 
 #include "CControler.h"
+#include <thread>
 class CMotor
 {
 private:
     enum typeEnum { DIGITAL = 0, ANALOG, SERVO,PWM };//need to add into get_Data
     enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, CRY};
+
 public:
+    enum typeShootPosEnum {RELOADPOS = 0, SHOOTPOS };
     /*Initialization of variables.*/
     int _pin1A,_pin2A,_pin1Y,_pin2Y;///y- outputM1, a -- inputM1'
     int _pinPWM1;
@@ -43,10 +46,10 @@ public:
 	void left(int time);
 	void right(int time);
 	void cry(int time );
-    void enableMotor();
+    void enableMotor(int state = 0);//standard state is on.
+    void shoot(int position);
 	CControl _control;
 
-	std::vector<int> _accelerationTable;
     int _lastCommand;
     int _consecutiveCount;
 };

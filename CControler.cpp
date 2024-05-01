@@ -44,7 +44,7 @@ CControl::CControl() {
         gpioSetPWMfrequency(_pinleftPWM, 500);
         gpioSetPWMfrequency(_pinrightPWM, 500);
         //enable,reset,sleep,step,direction
-        outputPinVector = {5,6,19,26,13,2,3};
+        outputPinVector = {1,5,6,7,19,26,13,2,3};
         for(int x = 0;x< outputPinVector.size();x++){//set inputs
             gpioSetMode(outputPinVector.at(x), PI_OUTPUT);
         }
@@ -57,11 +57,7 @@ CControl::CControl() {
             gpioSetPullUpDown(inputPinVector.at(x), PI_PUD_UP);
         }
         buttonVector = std::vector<buttonStruct>(30);
-
-
         gpioWrite(GPIO_PIN3_OUTPUT, 0);
-
-
         handle = spiOpen(0, 200000, 3); // Mode 0, 200kHz
     }
 }

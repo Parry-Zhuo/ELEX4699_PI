@@ -666,28 +666,16 @@ void CRecyclingSort::start(){
     server_thread = std::thread(&CRecyclingSort::serverThread,&server);
     vid_thread = std::thread(&CRecyclingSort::vidThread,&server);
 
-    //server_thread(&CRecyclingSort::serverThread, this, &server, 4618);
-    //server_thread(&CRecyclingSort::serverThread, this, &server, 4618);
-
-   // outputServer_thread = std::thread(&CRecyclingSort::serverThread, &server,4618);
     update_thread.join();
     draw_thread.join();
 
     server_thread.detach();
     vid_thread.detach();
-    //update_thread.detach();
-    //draw_thread.detach();
 
-
-
-//inputchar != 'q'
 
     while (isThreading == true){
-        //inputchar = cv::waitKey(1);
-        //draw();
         if(inputchar == 'q'){
             isThreading = false;
-
         }
     }
     end();

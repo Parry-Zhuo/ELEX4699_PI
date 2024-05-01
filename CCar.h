@@ -19,7 +19,7 @@ private:
 	static void serverthrd(CCar* ptr);
 	static void imagethrd(CCar* ptr);
 
-    bool _thread_exit;
+    bool _isThreading;
 
     cv::Mat _CGuidanceimage; // Declare a variable to hold the captured image
 
@@ -27,5 +27,5 @@ public:
 	CCar();
 	~CCar();
 	void drive();
-
+    void start();
 };

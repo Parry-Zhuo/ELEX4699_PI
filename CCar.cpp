@@ -42,6 +42,9 @@ void CCar::drive() {
     while(_guidance.key != 'q'){
 
         _guidance.get_im(_CGuidanceimage);// I think i'd have to multithread this.
+
+
+
         std::cout<<"potato is running with key " << _guidance.key << "\n";
         int timeDuration = 50;
         if(_guidance.key == 'w'){
@@ -52,6 +55,9 @@ void CCar::drive() {
             _motors.right(timeDuration);
         }else if(_guidance.key == 's'){
             _motors.backward(timeDuration);
+        }else if(_guidance.key == 'z'){// to shoot!
+
+            _motors.shoot(CMotor::SHOOTPOS);
         }else{
         //if no command
 
@@ -65,7 +71,34 @@ void CCar::drive() {
     }
 
 }
+void CCar::start(){
+/*
+    char inputchar = 0;
 
+    isThreading = true;
+
+    update_thread = std::thread(&CRecyclingSort::updateThread, this);
+    draw_thread = std::thread(&CRecyclingSort::drawThread, this);
+    server_thread = std::thread(&CRecyclingSort::serverThread,&server);
+    vid_thread = std::thread(&CRecyclingSort::vidThread,&server);
+
+    update_thread.join();
+    draw_thread.join();
+
+    server_thread.detach();
+    vid_thread.detach();
+
+
+    while (isThreading == true){
+        if(inputchar == 'q'){
+            isThreading = false;
+        }
+    }
+    end();
+    server.stop();
+    sleep(100);//not sure why this is here but okay
+*/
+}
 void CCar::serverthrd(CCar* ptr) {
     // Server thread handling
 }

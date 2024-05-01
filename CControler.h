@@ -40,12 +40,8 @@ private:
     bool outputButton1 = 0;
     bool outputButton2 = 0;
     bool outputButton3 = 0;
-    /*To be destroyed later*/
 
-    /*To be destroyed later*/
-
-    bool threadExit = true;
-
+    bool isThreading = true;
 
 public:
     /**
@@ -154,8 +150,7 @@ public:
     int GPIO_PIN20_INPUT = 20;
     int GPIO_PIN21_INPUT = 21;
 
-    int GPIO_PWM1 = 13;
-    int GPIO_PWM2 = 12;
+
 
     int debounceDelay = 10;
     enum ledStateENUM{ ledON = 0, ledOFF };//need to add into get_Data
@@ -170,7 +165,7 @@ public:
         int output = ledOFF;
         int buttonState = ledOFF;// may need to create new definition variable!
     };
-
+//
     /*@@@@@@Motor pin layout@@@@@@@@*/
     int _pinleftPWM = 12;
     int _pinrightPWM = 13;
@@ -180,6 +175,8 @@ public:
 
     int _pinEnRmotor = 2;
     int _pinEnLmotor= 3;
+
+    int _pinShootPWM = 7;///controls position of servo that shoots
 
     std::vector<buttonStruct> buttonVector;
     std::vector<int> inputPinVector;

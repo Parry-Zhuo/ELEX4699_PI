@@ -10,12 +10,15 @@
 #define _pinrightDIR 16
 
 CCar::CCar() {
-    // Constructor implementation
+
+
 }
 
 CCar::~CCar() {
     // Destructor implementation
 }
+
+
 void CCar::drive() {
     // Drive implementation
      //while(true){
@@ -33,22 +36,49 @@ void CCar::drive() {
     */
     cv::Size canvasSize = cv::Size(300, 900);
     _CGuidanceimage = cv::Mat::zeros(canvasSize.width/2, canvasSize.height/2, CV_8UC3);
-    std::cout<<"start the program by pressing s" << "\n";
+    std::cout<<"Press s for MANUAL MODE" << "\n";
+    std::cout<<"Press a for AUTOMATIC MODE " << "\n";
 
     while(_guidance.key != 's'){
-        _guidance.get_im(_CGuidanceimage);// I think i'd have to multithread this.
+        _guidance.get_im();// I think i'd have to multithread this.
     }
+    _guidance.isThreading = true;
     _motors.enableMotor();
-    while(_guidance.key != 'q'){
 
-        _guidance.get_im(_CGuidanceimage);// I think i'd have to multithread this.
+    //std::thread guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
+//    guidanceThread.detach();
+    if(_guidance.key == 's'){
+        _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
+        _manualThread = std::thread(&CCar::manualModethrd, this);
+
+        _manualThread.join();
+        _guidanceThread.join();
+        //manuelMode();
+    }else if(_guidance.key == 'a'){
+        //autoMode();
+    }
 
 
+    //_guidance.get_im();// I think i'd have to multithread this.
 
-        std::cout<<"potato is running with key " << _guidance.key << "\n";
+    _guidance.isThreading = false;
+
+}
+void CCar::manualModethrd(CCar* ptr) {
+
+//    std::cout<< "Getting image " << ptr->isThreading;
+    while (ptr->_guidance.isThreading) {
+        ptr->manuelMode();
+    }
+}
+void CCar::manuelMode(){
+
+    //while(_guidance.key != 'q'){
+        std::cout<<" guidance key" << _guidance.key << "\n";
+        /*So the issue is that _guidance.key does not always occur as there's a pause.*/
         int timeDuration = 50;
         if(_guidance.key == 'w'){
-            _motors.forwards(timeDuration);
+            _motors.forwards();
         }else if(_guidance.key == 'd'){
             _motors.left(timeDuration);
         }else if(_guidance.key == 'a'){
@@ -60,16 +90,13 @@ void CCar::drive() {
             _motors.shoot(CMotor::SHOOTPOS);
         }else{
         //if no command
-
-            _motors.cry(timeDuration);
+            //_guidance.key == ' ';
+            _motors.cry();
         }
-        std::cout<<"guidance key " <<  _guidance.key << "\n";
-        _guidance.key == ' ';
+        //std::cout<<"guidance key " <<  _guidance.key << "\n";
+
         //delay
-
-
-    }
-
+    //}
 }
 void CCar::start(){
 /*

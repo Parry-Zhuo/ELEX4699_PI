@@ -67,8 +67,8 @@ CRecyclingSort::CRecyclingSort(cv::Size canvasSize) {
 
 
     autoButton = controllerInstance.get_button(controllerInstance.GPIO_PIN2_INPUT);
-    bin1Button = controllerInstance.get_button2(controllerInstance.GPIO_PIN16_INPUT);
-    bin2Button = controllerInstance.get_button3(controllerInstance.GPIO_PIN20_INPUT);
+    //bin1Button = controllerInstance.get_button2(controllerInstance.GPIO_PIN16_INPUT);
+   // bin2Button = controllerInstance.get_button3(controllerInstance.GPIO_PIN20_INPUT);
 
     prevButton = autoButton;
     prevbin1Button = bin1Button;

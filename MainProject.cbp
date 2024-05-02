@@ -47,8 +47,6 @@
 		<Unit filename="CGuidance.h" />
 		<Unit filename="CMotor.cpp" />
 		<Unit filename="CMotor.h" />
-		<Unit filename="CRecyclingSort.cpp" />
-		<Unit filename="CRecyclingSort.h" />
 		<Unit filename="MainProject.cbp" />
 		<Unit filename="PPong.cpp" />
 		<Unit filename="PPong.h" />

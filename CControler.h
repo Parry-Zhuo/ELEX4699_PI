@@ -101,8 +101,7 @@ public:
      * @return 1 if pressed, 0 if not pressed
      */
     int get_button(int channel);
-    int get_button2(int channel);
-    int get_button3(int channel);
+
     /**
      * @brief Controls lights and reads button states using specified channels. Using level detection button.
      * @param inputChannel The channel to read the button state from.

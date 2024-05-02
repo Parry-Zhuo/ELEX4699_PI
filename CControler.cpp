@@ -16,11 +16,7 @@
 #include <opencv2/opencv.hpp>
 
 //#include "Serial.h"
-#define _pinleftPWM 12
-#define _pinrightPWM 13
 
-#define _pinleftDIR 6
-#define _pinrightDIR 16
 
 CControl::CControl() {
 
@@ -41,8 +37,8 @@ CControl::CControl() {
         gpioSetPullUpDown(_pinrightPWM, PI_PUD_UP);
         //gpioSetMode(12, PI_INPUT);
         //gpioSetPWMfrequency(_pinleftPWM, 25000);
-        gpioSetPWMfrequency(_pinleftPWM, 500);
-        gpioSetPWMfrequency(_pinrightPWM, 500);
+        //gpioSetPWMfrequency(_pinleftPWM, 500);
+        //gpioSetPWMfrequency(_pinrightPWM, 500);
         //enable,reset,sleep,step,direction
         outputPinVector = {1,5,6,7,19,26,13,2,3};
         for(int x = 0;x< outputPinVector.size();x++){//set inputs
@@ -133,7 +129,7 @@ bool CControl::set_data(int type, int channel, int val) {
     }else if(type == PWM){
         if(gpioPWM(channel, val) == 0){
             //successful
-            std::cout<< "PWM SIGNAL WORKED" << val << "channel: "<< channel<<  "\n";
+           // std::cout<< "PWM SIGNAL WORKED" << val << "channel: "<< channel<<  "\n";
         }else{
             std::cout<< "UNSUCCESSUL PWM SIGNAL" << val << "channel: "<< channel << "\n";
         }
@@ -165,67 +161,6 @@ int CControl::get_button(int channel) {
 	buttonVector.at(channel).lastState = result;
 	return buttonVector.at(channel).output;
 }
-
-int CControl::get_button2(int channel) {
-    //std::cout<<"button 2: "<< "\n";
-	static int result;
-	static int output;//determines the state
-	//float start_time = 0;
-	static float lastDebounceTime = 0;
-	static int buttonState; // Current reading from the button
-	static int lastButtonState = ledOFF; // Previous state of the button
-	static int debounceDelay = 10;
-	int timeout = 1000;
-	static int count = 0;
-	get_data(DIGITAL, channel, result); // initial detection of button press
-	if (result != lastButtonState) {
-		lastDebounceTime = float(cv::getTickCount()) / cv::getTickFrequency() * 1000;
-	}
-	if ((float(cv::getTickCount()) / cv::getTickFrequency() * 1000) - lastDebounceTime > debounceDelay) {
-		if (result != buttonState) {
-			buttonState = result;
-			if (buttonState == ledON) {
-				//button has been stabilized
-				output ^= 1;
-				count++;
-				std::cout << "BUTTON TEST : " << count << "\n";
-			}
-		}
-	}
-	lastButtonState = result;
-	return output;
-
-}
-int CControl::get_button3(int channel) {
-
-	static int result;
-	static int output;//determines the state
-	//float start_time = 0;
-	static float lastDebounceTime = 0;
-	static int buttonState; // Current reading from the button
-	static int lastButtonState = ledOFF; // Previous state of the button
-	static int debounceDelay = 10;
-	int timeout = 1000;
-	static int count = 0;
-	get_data(DIGITAL, channel, result); // initial detection of button press
-	if (result != lastButtonState) {
-		lastDebounceTime = float(cv::getTickCount()) / cv::getTickFrequency() * 1000;
-	}
-	if ((float(cv::getTickCount()) / cv::getTickFrequency() * 1000) - lastDebounceTime > debounceDelay) {
-		if (result != buttonState) {
-			buttonState = result;
-			if (buttonState == ledON) {
-				//button has been stabilized
-				output = 1;
-				count++;
-				std::cout << "BUTTON TEST : " << count << "\n";
-			}
-		}
-	}
-	lastButtonState = result;
-	return output;
-}
-
 /*
 This class correlates an digital input(BUTTONS), with an digital output(LED)3
 */

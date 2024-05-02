@@ -22,10 +22,7 @@ private:
 public:
     enum typeShootPosEnum {RELOADPOS = 0, SHOOTPOS };
     /*Initialization of variables.*/
-    int _pin1A,_pin2A,_pin1Y,_pin2Y;///y- outputM1, a -- inputM1'
-    int _pinPWM1;
-    int _pin4A,_pin3A,_pin4Y,_pin3Y;///y- outputM2, a -- inputM2
-    int _pinPWM2;
+
 
     int _leftDIR,_rightDIR;///direction of the motor 1 is back, 0 is forward probably
     int _leftPWM,_rightPWM;///refers to the value of PWM on that MOTOR
@@ -41,11 +38,12 @@ public:
 	int get_pwm_left();
 	int get_pwm_right();
 	void stop();
-	void forwards(int time);
-	void backward(int time);
-	void left(int time);
-	void right(int time);
-	void cry(int time );
+	void forwards(int time=  0);
+	void backward(int time = 0);
+	void left(int time = 0);
+	void right(int time = 0);
+	void cry(int time = 0);
+
     void enableMotor(int state = 0);//standard state is on.
     void shoot(int position);
 	CControl _control;

@@ -16,15 +16,16 @@
 #include <fstream>
 #include <sstream>
 
-//#include <thread>
+#include <thread>
 
 #include "pigpio.h"
 #include <opencv2/opencv.hpp>
 //#include "CControler.h"
 //#include "PPong.h"
-#include "CRecyclingSort.h"
+//#include "CRecyclingSort.h"
 #include "CCar.h"
 
+#include <opencv2/aruco.hpp>
 
 
 
@@ -309,7 +310,24 @@ void do_clientserver()
 
   sleep(100);
 }
+////////////////////////////////////////////////////////////////
+// Generate ARUCO markers
+////////////////////////////////////////////////////////////////
+void generate_marks()
+{
+  std::string str;
+  cv::Mat im;
+  int mark_size = 250;
 
+  cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+
+  for (int marker_id = 0; marker_id < 250; marker_id++)
+  {
+    cv::aruco::drawMarker(dictionary, marker_id, mark_size, im, 1);
+    str = "mark" + std::to_string(marker_id) + ".png";
+    cv::imwrite(str, im);
+  }
+}
 void do_video()
 {
     cv::VideoCapture vid;
@@ -403,13 +421,13 @@ void do_video()
 void lab7() {
     //cv::Size canvasSize = cv::Size(500, 900);
 
-    cv::Size canvasSize = cv::Size(300, 900);
+    //cv::Size canvasSize = cv::Size(300, 900);
     //cv::Size canvasSize = cv::Size(100, 100);
-    CRecyclingSort gandalf(canvasSize);
+    //CRecyclingSort gandalf(canvasSize);
 
     //gandalf.run();
     //gandalf.do_clientserver();
-    gandalf.start();
+    //gandalf.start();
 }
 void picar(){
     cv::Size canvasSize = cv::Size(300, 900);

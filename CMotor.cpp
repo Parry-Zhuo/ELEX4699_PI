@@ -9,8 +9,8 @@ CMotor::CMotor() {
     _control.set_data(DIGITAL,_control._pinEnLmotor,1);
     _control.set_data(DIGITAL,_control._pinEnRmotor,1);
 
-    _leftPWM = 8000;
-    _rightPWM = 8000;
+    _leftPWM = 5000;
+    _rightPWM = 5000;
 
     gpioSetPWMfrequency(_control._pinleftPWM, _leftPWM);
     gpioSetPWMfrequency(_control._pinrightPWM, _rightPWM);
@@ -53,6 +53,14 @@ int CMotor::get_pwm_right() {
 
 void CMotor::stop() {
     // Stop motors
+    _leftPWM = 0;
+    _rightPWM = 0;
+    setRightDir(1);
+    setLeftDir(1);
+
+    _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
+    _control.set_data(PWM,_control._pinrightPWM,0);// forgot to test speed at 255
+    _lastCommand = STOP;
 }
 
 void CMotor::shoot(int position){
@@ -63,7 +71,7 @@ void CMotor::shoot(int position){
        std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(400));
         _control.servoControl(_control._pinShootPWM, 180);
         std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
-        _control.servoControl(_control._pinShootPWM, 0);
+        _control.servoControl(_control._pinShootPWM, 50);
         std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(400));
         _control.servoControl(_control._pinShootPWM, 180);
     }else if(position == RELOADPOS){
@@ -102,13 +110,14 @@ void CMotor::forwards(int time) {
     }
     */
 
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+    auto finishTime = std::chrono::system_clock::now() + std::chrono::milliseconds(time);
+    do {
 
-    std::cout<<"_rightPWM: " << _rightPWM << "\n";
-    _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
-    _control.set_data(PWM,_control._pinrightPWM,126);
-       // _control.set_data(PWM,6,200);
-        //_control.set_data(DIGITAL,5,1);//0
-    //}
+        std::cout<<"_rightPWM: " << _rightPWM << "\n";
+        _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
+        _control.set_data(PWM,_control._pinrightPWM,126);
+    }while(finishTime >  std::chrono::system_clock::now());
     _lastCommand = FORWARD;
 }
 
@@ -118,11 +127,13 @@ void CMotor::backward(int time) {
     setRightDir(0);
     setLeftDir(0);
 
-    _control.set_data(PWM,_control._pinrightPWM,126);// we can multithread this in the future.
-    _control.set_data(PWM,_control._pinleftPWM,126);// forgot to test speed at 255
-
-    //setRightDir(0);
-    //setLeftDir(0);
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+    auto finishTime = std::chrono::system_clock::now() + std::chrono::milliseconds(time);
+    do {
+        std::cout<<"_rightPWM: " << _rightPWM << "\n";
+        _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
+        _control.set_data(PWM,_control._pinrightPWM,126);
+    }while(finishTime >  std::chrono::system_clock::now());
     _lastCommand = BACKWARD;
 }
 //turns right
@@ -132,8 +143,13 @@ void CMotor::left(int time) {
     _leftPWM = 8000;
     _rightPWM = 0;
 
-    _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
-    _control.set_data(PWM,_control._pinrightPWM,0);// forgot to test speed at 255
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+    auto finishTime = std::chrono::system_clock::now() + std::chrono::milliseconds(time);
+    do {
+        std::cout<<"_rightPWM: " << _rightPWM << "\n";
+        _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
+        _control.set_data(PWM,_control._pinrightPWM,0);
+    }while(finishTime >  std::chrono::system_clock::now());
     _lastCommand = LEFT;
 }
 //turns left
@@ -141,10 +157,14 @@ void CMotor::right(int time) {
     //int timeMS = 1000;
     _leftPWM = 0;
     _rightPWM = 8000;
+    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+    auto finishTime = std::chrono::system_clock::now() + std::chrono::milliseconds(time);
+    do{
 
-    _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
-    _control.set_data(PWM,_control._pinrightPWM,126);// forgot to test speed at 255
-
+        std::cout<<"_rightPWM: " << _rightPWM << "\n";
+        _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
+        _control.set_data(PWM,_control._pinrightPWM,126);
+    }while(finishTime >  std::chrono::system_clock::now());
     _lastCommand = RIGHT;
 }
 void CMotor::cry(int time) {

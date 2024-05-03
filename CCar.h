@@ -18,10 +18,10 @@ private:
 	CGuidance _guidance;
 	static void serverthrd(CCar* ptr);
 	static void imagethrd(CCar* ptr);
-	static void manualModethrd(CCar* ptr);
+	static void modethrd(CCar* ptr,std::string _modeName);
     void drawGUI();
     std::thread _guidanceThread;
-    std::thread _manualThread;
+    std::thread _modeThread;
     bool _isThreading;
 
     cv::Mat _CGuidanceimage; // Declare a variable to hold the captured image
@@ -35,10 +35,13 @@ private:
     static void serverThread(CServer* server);//, int port
     static void CGuidanceThread(CGuidance* camera);//, int port
 
+
+
     //static void updateThread(CRecyclingSort* ptr);
     //static void drawThread(CRecyclingSort* ptr);
 
 public:
+    int mode;
 	CCar();
 	~CCar();
 	void drive();

@@ -36,26 +36,33 @@ void CCar::drive() {
     */
     cv::Size canvasSize = cv::Size(300, 900);
     _CGuidanceimage = cv::Mat::zeros(canvasSize.width/2, canvasSize.height/2, CV_8UC3);
-    std::cout<<"Press s for MANUAL MODE" << "\n";
+    std::cout<<"Press m for MANUAL MODE" << "\n";
     std::cout<<"Press a for AUTOMATIC MODE " << "\n";
 
     while(_guidance.key != 's'){
         _guidance.get_im();// I think i'd have to multithread this.
+        if(_guidance.key == 'm'){
+            break;
+        }else if(_guidance.key == 'a'){
+            break;
+        }
     }
     _guidance.isThreading = true;
     _motors.enableMotor();
 
     //std::thread guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
 //    guidanceThread.detach();
-    if(_guidance.key == 's'){
+    if(_guidance.key == 'm'){
         _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
-        _manualThread = std::thread(&CCar::manualModethrd, this);
-
-        _manualThread.join();
+        _modeThread = std::thread(&CCar::modethrd, this, "manual");
+        _modeThread.join();
         _guidanceThread.join();
         //manuelMode();
     }else if(_guidance.key == 'a'){
-        //autoMode();
+        _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
+        _modeThread = std::thread(&CCar::modethrd, this, "auto");
+        _modeThread.join();
+        _guidanceThread.join();
     }
 
 
@@ -64,12 +71,32 @@ void CCar::drive() {
     _guidance.isThreading = false;
 
 }
-void CCar::manualModethrd(CCar* ptr) {
+
+void CCar::modethrd(CCar* ptr, std::string _modeName) {
 
 //    std::cout<< "Getting image " << ptr->isThreading;
-    while (ptr->_guidance.isThreading) {
-        ptr->manuelMode();
+    if(_modeName == "manual"){
+        while (ptr->_guidance.isThreading) {
+            ptr->manuelMode();
+        }
+    }else if(_modeName == "auto"){
+        //while (ptr->_guidance.isThreading) {
+        ptr->autoMode();
+        //}
     }
+}
+void CCar::autoMode(){
+
+    _motors.forwards(1750);
+    _motors.stop();
+    _motors.shoot();
+    _motors.forwards(1750);
+    _motors.right(800);
+
+    _motors.stop();
+    _motors._control.set_data(1,_motors._control._pinEnLmotor,0);
+    _motors._control.set_data(1,_motors._control._pinEnRmotor,0);
+
 }
 void CCar::manuelMode(){
 
@@ -79,14 +106,13 @@ void CCar::manuelMode(){
         int timeDuration = 50;
         if(_guidance.key == 'w'){
             _motors.forwards();
-        }else if(_guidance.key == 'd'){
-            _motors.left(timeDuration);
         }else if(_guidance.key == 'a'){
-            _motors.right(timeDuration);
+            _motors.left();
+        }else if(_guidance.key == 'd'){
+            _motors.right();
         }else if(_guidance.key == 's'){
             _motors.backward(timeDuration);
         }else if(_guidance.key == 'z'){// to shoot!
-
             _motors.shoot(CMotor::SHOOTPOS);
         }else{
         //if no command

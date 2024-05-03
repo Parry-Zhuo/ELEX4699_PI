@@ -17,7 +17,7 @@ class CMotor
 {
 private:
     enum typeEnum { DIGITAL = 0, ANALOG, SERVO,PWM };//need to add into get_Data
-    enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, CRY};
+    enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, STOP,CRY};
 
 public:
     enum typeShootPosEnum {RELOADPOS = 0, SHOOTPOS };
@@ -45,7 +45,8 @@ public:
 	void cry(int time = 0);
 
     void enableMotor(int state = 0);//standard state is on.
-    void shoot(int position);
+    void shoot(int position = 0);
+
 	CControl _control;
 
     int _lastCommand;

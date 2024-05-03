@@ -728,10 +728,10 @@
 	<opencv2/opencv.hpp>
 	<X11/Xlib.h>
 
-1714687935 source:/home/parry/Documents/MainProject/CMotor.cpp
+1714705184 source:/home/parry/Documents/MainProject/CMotor.cpp
 	"CMotor.h"
 
-1714682621 /home/parry/Documents/MainProject/CMotor.h
+1714706532 /home/parry/Documents/MainProject/CMotor.h
 	"CControler.h"
 	<thread>
 
@@ -744,12 +744,12 @@
 	<vector>
 	<thread>
 
-1714685707 source:/home/parry/Documents/MainProject/CCar.cpp
+1714706282 source:/home/parry/Documents/MainProject/CCar.cpp
 	"CCar.h"
 	"CGuidance.h"
 	"CMotor.h"
 
-1714685344 /home/parry/Documents/MainProject/CCar.h
+1714704894 /home/parry/Documents/MainProject/CCar.h
 	"server.h"
 	"CMotor.h"
 	"CGuidance.h"

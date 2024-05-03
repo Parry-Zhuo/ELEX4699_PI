@@ -5,6 +5,7 @@
 #include <vector>
 #include <thread>
 
+#include <opencv2/aruco.hpp>
 //#include "raspicam_cv.h"
 class CGuidance
 {
@@ -16,6 +17,7 @@ private:
     std::chrono::steady_clock::time_point calc_end; ///< End time point for frame calculation.
     std::chrono::milliseconds deltaT; ///< Time difference for frame rate calculation.
     void drawGUI();
+    cv::Ptr<cv::aruco::Dictionary> dictionary;
 
 public:
 

@@ -27,12 +27,13 @@ CGuidance::CGuidance() {
         std::cout << "Unable to open camera" << std::endl;
         exit(0);
     }
-
     calc_start = std::chrono::steady_clock::now();
     calc_end = calc_start;
     deltaT = std::chrono::milliseconds(1);
     //isThreading = true;
     isThreading = true;
+    dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+
 }
 
 CGuidance::~CGuidance() {
@@ -51,8 +52,21 @@ void CGuidance::imageThread(CGuidance* ptr) {
 }
 void CGuidance::get_im(){
     if (vid.isOpened()) {
-        //vid_mutex.lock();
+
+        cv::Mat edges;
         vid >> _canvas;
+        /*
+        //@@WARNING
+        //ERROR SHUT DOWN OF PI OCCURS SOMETIMES WHEN SERVO MOVES ALONGSIDE THIS
+        std::vector<int> ids;
+        std::vector<std::vector<cv::Point2f> > corners;
+        cv::aruco::detectMarkers(_canvas, dictionary, corners, ids);
+        if (ids.size() > 0)
+        {
+            std::cout<< "ID SIZE" << " " << ids.size();
+            cv::aruco::drawDetectedMarkers(_canvas, corners, ids);
+        }
+        */
         //drawGUI();
         cv::imshow(CANVAS_NAME, _canvas);//ensure this is always behind key
         key = cv::waitKey(1);
@@ -63,10 +77,10 @@ void CGuidance::get_im(){
 
         //server.set_txim(im);
         //vid_mutex.unlock();
-        //std::this_thread::sleep_until(calc_start + std::chrono::milliseconds(30));
-        //calc_end = std::chrono::steady_clock::now();
-        //deltaT = std::chrono::duration_cast<std::chrono::milliseconds>(calc_end - calc_start) ;
-        //calc_start = std::chrono::steady_clock::now();
+        std::this_thread::sleep_until(calc_start + std::chrono::milliseconds(30));
+        calc_end = std::chrono::steady_clock::now();
+        deltaT = std::chrono::duration_cast<std::chrono::milliseconds>(calc_end - calc_start) ;
+        calc_start = std::chrono::steady_clock::now();
     }else{
         std::cout<< "Camera is not openned\n";
         exit(0);

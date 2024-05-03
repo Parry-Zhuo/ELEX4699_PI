@@ -340,7 +340,7 @@ void do_video()
     int canny_thresh = 30;
     bool do_exit = false;
 
-//    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
+    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
 
     // initialize GUI system
     cvui::init(CANVAS_NAME);
@@ -365,7 +365,7 @@ void do_video()
             // Make sure video frame exists
             if (frame.empty() == false)
             {
-                /*
+
                 // ARUCO marker tracking
                 if (do_aruco == true)
                 {
@@ -386,7 +386,7 @@ void do_video()
                     cv::Canny(edges, edges, 0, canny_thresh, 3);
                     cv::add(frame, color_vec.at(color_index), frame, edges);
                 }
-                */
+
                 // GUI Menu
                 gui_position = cv::Point(10, 10);
 

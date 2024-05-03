@@ -16,6 +16,17 @@ CCar::CCar() {
 
 CCar::~CCar() {
     // Destructor implementation
+    _guidance.isThreading = false;
+    if (_modeThread.joinable()) {
+        _modeThread.join();
+    }
+    if (_guidanceThread.joinable()) {
+        _guidanceThread.join();
+    }
+    _motors._control.set_data(1,_motors._control._pinEnLmotor,0);
+    _motors._control.set_data(1,_motors._control._pinEnRmotor,0);
+
+    exit(0);
 }
 
 
@@ -51,22 +62,28 @@ void CCar::drive() {
     _motors.enableMotor();
 
     //std::thread guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
-//    guidanceThread.detach();
+    //guidanceThread.detach();
     if(_guidance.key == 'm'){
         _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
         _modeThread = std::thread(&CCar::modethrd, this, "manual");
-        _modeThread.join();
-        _guidanceThread.join();
+        _modeThread.detach();
+        _guidanceThread.detach();
+        while (_guidance.key != 'q') {
+        }
         //manuelMode();
     }else if(_guidance.key == 'a'){
         _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
         _modeThread = std::thread(&CCar::modethrd, this, "auto");
         _modeThread.join();
         _guidanceThread.join();
+    }else if(_guidance.key == 't'){//test mode
+        while(_guidance.key != 'q'){
+            _guidance.get_im();// I think i'd have to multithread this.
+        }
     }
 
 
-    //_guidance.get_im();// I think i'd have to multithread this.
+    //  _guidance.get_im();// I think i'd have to multithread this.
 
     _guidance.isThreading = false;
 
@@ -101,8 +118,8 @@ void CCar::autoMode(){
 void CCar::manuelMode(){
 
     //while(_guidance.key != 'q'){
-        std::cout<<" guidance key" << _guidance.key << "\n";
-        /*So the issue is that _guidance.key does not always occur as there's a pause.*/
+        //std::cout<<" guidance key" << _guidance.key << "\n";
+
         int timeDuration = 50;
         if(_guidance.key == 'w'){
             _motors.forwards();
@@ -155,19 +172,7 @@ void CCar::start(){
 void CCar::serverthrd(CCar* ptr) {
     // Server thread handling
 }
-/*
 
-void PPong::update_thread(PPong* ptr) {
-    std::cout<<"thread exit" << !ptr->_thread_exit << "gamePause" << !ptr->gamePause << "\n";
-    while (!ptr->_thread_exit) {
-        if (!ptr->gamePause) {
-            ptr->update();
-        }
-        // No need to spawn a new thread here, just execute update
-    }
-}
-
-*/
 void CCar::imagethrd(CCar* ptr) {
     // Image processing thread handling
     /*

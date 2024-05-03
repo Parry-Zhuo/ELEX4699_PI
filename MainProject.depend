@@ -659,7 +659,7 @@
 1608580898 /usr/include/opencv4/opencv2/core/core.hpp
 	"opencv2/core.hpp"
 
-1714682514 source:/home/parry/Documents/MainProject/4618_Template.cpp
+1714714818 source:/home/parry/Documents/MainProject/4618_Template.cpp
 	"cvui.h"
 	<string>
 	<iostream>
@@ -728,23 +728,24 @@
 	<opencv2/opencv.hpp>
 	<X11/Xlib.h>
 
-1714705184 source:/home/parry/Documents/MainProject/CMotor.cpp
+1714724578 source:/home/parry/Documents/MainProject/CMotor.cpp
 	"CMotor.h"
 
 1714706532 /home/parry/Documents/MainProject/CMotor.h
 	"CControler.h"
 	<thread>
 
-1714686296 source:/home/parry/Documents/MainProject/CGuidance.cpp
+1714724583 source:/home/parry/Documents/MainProject/CGuidance.cpp
 	"CGuidance.h"
 
-1714602434 /home/parry/Documents/MainProject/CGuidance.h
+1714716324 /home/parry/Documents/MainProject/CGuidance.h
 	<opencv2/opencv.hpp>
 	<opencv2/highgui.hpp>
 	<vector>
 	<thread>
+	<opencv2/aruco.hpp>
 
-1714706282 source:/home/parry/Documents/MainProject/CCar.cpp
+1714721617 source:/home/parry/Documents/MainProject/CCar.cpp
 	"CCar.h"
 	"CGuidance.h"
 	"CMotor.h"

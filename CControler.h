@@ -172,7 +172,7 @@ public:
     int _pinleftDIR = 6;
     int _pinrightDIR = 16;
 
-    int _pinEnRmotor = 2;
+    int _pinEnRmotor = 26;
     int _pinEnLmotor= 3;
 
     int _pinShootPWM = 7;///controls position of servo that shoots

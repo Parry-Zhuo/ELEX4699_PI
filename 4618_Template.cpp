@@ -53,10 +53,26 @@
 ////////////////////////////////////////////////////////////////
 // Lab 2
 ////////////////////////////////////////////////////////////////
-void lab1()
-{
-}
+void lab1() {
+    // Create a window
+    cv::namedWindow("Example", cv::WINDOW_AUTOSIZE);
 
+    // Display an empty window
+    cv::Mat emptyImage = cv::Mat::zeros(480, 640, CV_8UC3);  // Creates a black window
+    cv::imshow("Example", emptyImage);
+
+    // Loop until 'q' is pressed
+    char key;
+    do {
+        key = cv::waitKey(0);  // Wait for 1 ms for a key press
+        if (key != -1) {
+            std::cout << "Key pressed: " << key << std::endl;
+        }
+    } while (key != 'q');  // Continue looping until 'q' is pressed
+
+    // Close the window
+    cv::destroyWindow("Example");
+}
 ////////////////////////////////////////////////////////////////
 // Lab 2
 ////////////////////////////////////////////////////////////////
@@ -288,7 +304,6 @@ void do_clientserver()
         }
       }
     }
-
 		// Update server image with the latest camera image
 		if (vid.isOpened() == true)
 		{

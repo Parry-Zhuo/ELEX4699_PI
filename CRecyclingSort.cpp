@@ -1,6 +1,5 @@
 //#include "stdafx.h"
-#include "CRecyclingSort.h"
-
+#include "CRecycling\
 //#include "CControler.h"
 //#include "PPong.h"
 #include <opencv2/highgui.hpp>

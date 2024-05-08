@@ -45,7 +45,7 @@ public:
 	void cry(int time = 0);
 
     void enableMotor(int state = 0);//standard state is on.
-    void shoot(int position = 0);
+    void shoot(int position = 1);
 
 	CControl _control;
 

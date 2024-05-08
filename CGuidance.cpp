@@ -33,7 +33,6 @@ CGuidance::CGuidance() {
     //isThreading = true;
     isThreading = true;
     dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
-
 }
 
 CGuidance::~CGuidance() {
@@ -41,6 +40,54 @@ CGuidance::~CGuidance() {
 }
 /*What's the purpose of this function FOR PHASE ONE this does nothing.*/
 void CGuidance::update(){
+    std::vector<int> ids;
+    std::vector<std::vector<cv::Point2f> > corners;
+    /*
+    cv::aruco::detectMarkers(_canvas, dictionary, corners, ids);
+    if (ids.size() > 0)
+    {
+        std::cout<< "ID SIZE" << " " << ids.size() << "\n";
+        cv::aruco::drawDetectedMarkers(_canvas, corners, ids);
+        isShoot = true;
+    }
+*/
+    cv::Mat edges;
+    vid >> _canvas;
+
+     if (vid.isOpened()) {
+        //vid_mutex.lock();
+            //@@@THREADING STUFF
+        server.get_cmd(cmds);
+        if (cmds.size() > 0){
+          for (int i = 0; i < cmds.size(); i++){
+            std::cout << "\n Rx: " << cmds.at(i);
+            if (cmds.at(i) == "im"){
+              std::cout << "\nServer Rx: " << cmds.at(i);
+            }else if(cmds.at(i) == "s w \n"){
+                //go forward.
+            }else if((cmds.at(i) == "s 0 1 \n") || cmds.at(i) == "s 0 0 \n"){
+                std::string reply = "Toggled" ;
+                //server.send_string(reply);
+                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+            }else{
+              std::cout << "\nServer Rx: " << cmds.at(i);
+              std::string reply = "Got some other message";
+            }
+          }
+        }
+            //server.send_string("random word  - test response");
+    }
+}
+void CGuidance::vidThread(CServer* server)//
+{
+  // Start server
+  server->start(1234);
+
+}
+void CGuidance::serverThread(CServer* server)//
+{
+  // Start server
+  server->start(4618);
 
 }
 void CGuidance::imageThread(CGuidance* ptr) {
@@ -50,40 +97,31 @@ void CGuidance::imageThread(CGuidance* ptr) {
 
     }
 }
+void CGuidance::updateThread(CGuidance* ptr) {
+    std::cout<< "Getting image " << ptr->isThreading;
+    while (ptr->isThreading) {
+        ptr->update();
+
+    }
+}
 void CGuidance::get_im(){
     if (vid.isOpened()) {
 
-        cv::Mat edges;
-        vid >> _canvas;
-        /*
-        //@@WARNING
-        //ERROR SHUT DOWN OF PI OCCURS SOMETIMES WHEN SERVO MOVES ALONGSIDE THIS
-        std::vector<int> ids;
-        std::vector<std::vector<cv::Point2f> > corners;
-        cv::aruco::detectMarkers(_canvas, dictionary, corners, ids);
-        if (ids.size() > 0)
-        {
-            std::cout<< "ID SIZE" << " " << ids.size();
-            cv::aruco::drawDetectedMarkers(_canvas, corners, ids);
-        }
-        */
+        //cv::imshow(CANVAS_NAME, _canvas);
         //drawGUI();
-        cv::imshow(CANVAS_NAME, _canvas);//ensure this is always behind key
-        key = cv::waitKey(1);
-        //_canvas.copyTo(im);// tbh, not too sure why we need im
         if(key == 'q'){
             isThreading = false;
         }
-
-        //server.set_txim(im);
-        //vid_mutex.unlock();
+        vid_mutex.lock();
+        server.set_txim(_canvas);
+        vid_mutex.unlock();
         std::this_thread::sleep_until(calc_start + std::chrono::milliseconds(30));
         calc_end = std::chrono::steady_clock::now();
         deltaT = std::chrono::duration_cast<std::chrono::milliseconds>(calc_end - calc_start) ;
         calc_start = std::chrono::steady_clock::now();
     }else{
         std::cout<< "Camera is not openned\n";
-        exit(0);
+        //exit(0);
     }
 }
 void CGuidance::drawGUI() {

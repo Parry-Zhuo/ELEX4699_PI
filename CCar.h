@@ -22,6 +22,9 @@ private:
     void drawGUI();
     std::thread _guidanceThread;
     std::thread _modeThread;
+    std::thread _guidanceUpdateThread;
+    std::thread _server_thread; ///< Thread for handling camera.
+    std::thread _vid_thread;
     bool _isThreading;
 
     cv::Mat _CGuidanceimage; // Declare a variable to hold the captured image
@@ -32,10 +35,11 @@ private:
     /*THREAD and SERVER STUFF*/
     CServer server;
     CServer _outputserver;
+
     static void serverThread(CServer* server);//, int port
     static void CGuidanceThread(CGuidance* camera);//, int port
 
-
+    void disableMotors();
 
     //static void updateThread(CRecyclingSort* ptr);
     //static void drawThread(CRecyclingSort* ptr);

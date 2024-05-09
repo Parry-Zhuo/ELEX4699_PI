@@ -15,7 +15,7 @@ CCommunication object for transmission to the client.
 CGuidance::CGuidance() {
     // Constructor implementation
 
-     matSize = cv::Size(300, 900);
+     matSize = cv::Size(320, 240);
     _canvas = cv::Mat::zeros(matSize.width, matSize.height, CV_8UC3);
     key = ' ';
    // cvui::init(CANVAS_NAME);
@@ -27,6 +27,9 @@ CGuidance::CGuidance() {
         std::cout << "Unable to open camera" << std::endl;
         exit(0);
     }
+    vid.set(cv::CAP_PROP_FRAME_WIDTH, matSize.width);  // Set the width
+    vid.set(cv::CAP_PROP_FRAME_HEIGHT, matSize.height);  // Set the height
+    vid.set(cv::CAP_PROP_FPS, 30);  // Set desired FPS
     calc_start = std::chrono::steady_clock::now();
     calc_end = calc_start;
     deltaT = std::chrono::milliseconds(1);
@@ -61,18 +64,20 @@ void CGuidance::update(){
         if (cmds.size() > 0){
           for (int i = 0; i < cmds.size(); i++){
             std::cout << "\n Rx: " << cmds.at(i);
-            if (cmds.at(i) == "im"){
-              std::cout << "\nServer Rx: " << cmds.at(i);
-            }else if(cmds.at(i) == "s w \n"){
-                //go forward.
-            }else if((cmds.at(i) == "s 0 1 \n") || cmds.at(i) == "s 0 0 \n"){
-                std::string reply = "Toggled" ;
-                //server.send_string(reply);
-                std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
-            }else{
-              std::cout << "\nServer Rx: " << cmds.at(i);
-              std::string reply = "Got some other message";
+            if (cmds.at(i) == "w"){
+                key = 'w';
+            }else if(cmds.at(i) == "s"){
+                key= 's';
+            }else if(cmds.at(i) == "a"){
+                key= 'a';
+            }else if(cmds.at(i) == "d"){
+                key= 'd';
+            }else if(cmds.at(i) == "x"){
+                key= 'x';
+            }else if(cmds.at(i) == "z"){
+                key= 'z';
             }
+
           }
         }
             //server.send_string("random word  - test response");

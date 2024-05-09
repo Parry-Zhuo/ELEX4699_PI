@@ -3,7 +3,7 @@
 
 CMotor::CMotor() {
 
-    _lastCommand = CRY;
+    _lastCommand = ' ';
     _consecutiveCount = 0;
     //ENSURE MOTOR DRIVER IS TURNED OFF TO CONSERVE POWER
     _control.set_data(DIGITAL,_control._pinEnLmotor,1);
@@ -61,17 +61,18 @@ void CMotor::stop() {
 
     _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
     _control.set_data(PWM,_control._pinrightPWM,0);// forgot to test speed at 255
-    _lastCommand = STOP;
+    _lastCommand = ' ';
 }
 
 void CMotor::shoot(int position){
 //    std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
+
     if(position == SHOOTPOS){
        // _ball1Count++;
        std::cout<< "shoot! \n";
-       std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
-        _control.servoControl(_control._pinShootPWM, 150);
-        std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(800));
+       //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+        //_control.servoControl(_control._pinShootPWM, 150);
+        //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(800));
         _control.servoControl(_control._pinShootPWM, 30);
         std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
         _control.servoControl(_control._pinShootPWM, 150);
@@ -110,7 +111,7 @@ void CMotor::forwards(int time) {
         lagAccomodation++;
     }
     */
-    _lastCommand = FORWARD;
+    _lastCommand = 'w';
     if(time == 0){
         _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,126);
@@ -132,7 +133,7 @@ void CMotor::backward(int time) {
 
     setRightDir(0);
     setLeftDir(0);
-    _lastCommand = BACKWARD;
+    _lastCommand = 's';
         if(time == 0){
         _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,126);
@@ -150,7 +151,7 @@ void CMotor::backward(int time) {
 //turns right
 void CMotor::left(int time) {
 
-    _lastCommand = LEFT;
+    _lastCommand = 'd';
     if(time == 0){
         _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,0);
@@ -168,7 +169,7 @@ void CMotor::left(int time) {
 //turns left
 void CMotor::right(int time) {
 
-    _lastCommand = RIGHT;
+    _lastCommand = 'a';
     if(time == 0){
         _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,126);
@@ -193,5 +194,5 @@ void CMotor::cry(int time) {
     //disable MOTOR??? Probably not.
     _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
     _control.set_data(PWM,_control._pinrightPWM,0);
-    _lastCommand = CRY;
+    _lastCommand = 'c';
 }

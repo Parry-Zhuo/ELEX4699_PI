@@ -181,13 +181,17 @@ void CCar::manuelMode(){
         _motors.right(timeDuration);
     }else if(_guidance.key == 's'){
         _motors.backward(timeDuration);
-    }else if(_guidance.key == 'z'){// to shoot!
-        _motors.shoot(CMotor::SHOOTPOS);
     }else if(_guidance.key == 'q'){// to shoot!
+        _motors.stop();
         _guidance.isThreading = false;
     }else if(_guidance.key == 'x'){
         //_guidance.key == ' ';
         _motors.cry();
+    }
+
+    if(_guidance.key == 'z'){// to shoot!
+        _motors.shoot(CMotor::SHOOTPOS);
+        _guidance.key = _motors._lastCommand;
     }
     //std::cout<<"guidance key " <<  _guidance.key << "\n";
 

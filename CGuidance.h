@@ -28,6 +28,7 @@ public:
 	void get_im();///this one would probably be in charge of displaying image?
 
     char key;
+
     bool isThreading;
     static void imageThread(CGuidance* ptr);
     static void updateThread(CGuidance* ptr);

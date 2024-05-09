@@ -17,7 +17,7 @@ class CMotor
 {
 private:
     enum typeEnum { DIGITAL = 0, ANALOG, SERVO,PWM };//need to add into get_Data
-    enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, STOP,CRY};
+    //enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, STOP,CRY,SHOOT};
 
 public:
     enum typeShootPosEnum {RELOADPOS = 0, SHOOTPOS };
@@ -49,6 +49,6 @@ public:
 
 	CControl _control;
 
-    int _lastCommand;
+    char _lastCommand;
     int _consecutiveCount;
 };

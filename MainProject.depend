@@ -656,7 +656,7 @@
 	<opencv2/opencv.hpp>
 	<X11/Xlib.h>
 
-1715234194 /home/parry/Documents/MainProject/CMotor.h
+1715298122 /home/parry/Documents/MainProject/CMotor.h
 	"CControler.h"
 	<thread>
 
@@ -667,7 +667,7 @@
 	"pigpio.h"
 	<opencv2/opencv.hpp>
 
-1715239906 /home/parry/Documents/MainProject/CGuidance.h
+1715377695 /home/parry/Documents/MainProject/CGuidance.h
 	<opencv2/opencv.hpp>
 	<opencv2/highgui.hpp>
 	<vector>
@@ -707,7 +707,7 @@
 	"CControler.h"
 	<opencv2/core.hpp>
 
-1715239730 source:/home/parry/Documents/MainProject/CCar.cpp
+1715380383 source:/home/parry/Documents/MainProject/CCar.cpp
 	"CCar.h"
 	"CGuidance.h"
 	"CMotor.h"
@@ -721,10 +721,10 @@
 	"pigpio.h"
 	<opencv2/opencv.hpp>
 
-1715231700 source:/home/parry/Documents/MainProject/CGuidance.cpp
+1715373852 source:/home/parry/Documents/MainProject/CGuidance.cpp
 	"CGuidance.h"
 
-1715234854 source:/home/parry/Documents/MainProject/CMotor.cpp
+1715378567 source:/home/parry/Documents/MainProject/CMotor.cpp
 	"CMotor.h"
 
 1709820138 source:/home/parry/Documents/MainProject/PPong.cpp

@@ -18,7 +18,7 @@ class CMotor
 private:
     enum typeEnum { DIGITAL = 0, ANALOG, SERVO,PWM };//need to add into get_Data
     //enum statesEnum { FORWARD = 0, BACKWARD, LEFT, RIGHT, STOP,CRY,SHOOT};
-
+    int maxFreq= 6000;
 public:
     enum typeShootPosEnum {RELOADPOS = 0, SHOOTPOS };
     /*Initialization of variables.*/

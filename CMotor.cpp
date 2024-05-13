@@ -9,12 +9,13 @@ CMotor::CMotor() {
     _control.set_data(DIGITAL,_control._pinEnLmotor,1);
     _control.set_data(DIGITAL,_control._pinEnRmotor,1);
 
-    _leftPWM = 5000;
-    _rightPWM = 5000;
+    _leftPWM = 4000;
+    _rightPWM = 4000;
+
 
     gpioSetPWMfrequency(_control._pinleftPWM, _leftPWM);
     gpioSetPWMfrequency(_control._pinrightPWM, _rightPWM);
-
+    maxFreq = 6000;
 }
 
 CMotor::~CMotor() {
@@ -74,7 +75,7 @@ void CMotor::shoot(int position){
         //_control.servoControl(_control._pinShootPWM, 150);
         //std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(800));
         _control.servoControl(_control._pinShootPWM, 30);
-        std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
+        std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(300));
         _control.servoControl(_control._pinShootPWM, 150);
     }else if(position == RELOADPOS){
 
@@ -95,28 +96,37 @@ void CMotor::forwards(int time) {
      //   int result = 1;
         //_control.lightsAndButtons(_control.GPIO_PIN2_INPUT,_control.GPIO_PIN3_OUTPUT, result);
     //int maxFreq = 1500;
-    /*
-    if(_lastCommand == FORWARD){
-        _leftPWM += 100;
-        _rightPWM +=100;
-        if(_leftPWM >= maxFreq){
-            _leftPWM = maxFreq;
-            _rightPWM = maxFreq;
-        }
-    }else if(lagAccomodation >=3){
-        _leftPWM =800;
-        _rightPWM =800;
-        lagAccomodation = 0;
-    }else{
-        lagAccomodation++;
-    }
-    */
-    _lastCommand = 'w';
     if(time == 0){
         _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,126);
-        return;
     }
+    /*
+    if(_lastCommand == 'w'){
+
+        std::cout << "freq" << _leftPWM << "\n";
+        if(_leftPWM >= maxFreq){
+
+            _leftPWM = maxFreq;
+            _rightPWM = maxFreq;
+        }else if(_leftPWM % 500 == 0){
+            gpioSetPWMfrequency(_control._pinleftPWM, _leftPWM);
+            gpioSetPWMfrequency(_control._pinrightPWM, _rightPWM);
+            _leftPWM += 5;
+            _rightPWM +=5;
+        }else{
+            _leftPWM += 5;
+            _rightPWM +=5;
+
+        }
+    }else{
+        setRightDir(1);
+        setLeftDir(1);
+        _leftPWM = 4000;
+        _rightPWM = 4000;
+        //forwards();
+    }
+    */
+
     std::this_thread::sleep_until(std::chrono::system_clock::now() + std::chrono::milliseconds(200));
     auto finishTime = std::chrono::system_clock::now() + std::chrono::milliseconds(time);
     do {
@@ -125,6 +135,7 @@ void CMotor::forwards(int time) {
         _control.set_data(PWM,_control._pinleftPWM,126);// we can multithread this in the future.
         _control.set_data(PWM,_control._pinrightPWM,126);
     }while(finishTime >  std::chrono::system_clock::now());
+    _lastCommand = 'w';
 
 }
 
@@ -194,5 +205,5 @@ void CMotor::cry(int time) {
     //disable MOTOR??? Probably not.
     _control.set_data(PWM,_control._pinleftPWM,0);// we can multithread this in the future.
     _control.set_data(PWM,_control._pinrightPWM,0);
-    _lastCommand = 'c';
+    _lastCommand = 'x';
 }

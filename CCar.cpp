@@ -59,7 +59,16 @@ void CCar::drive() {
     //std::cout << "chosen mode " << _guidance.key << "\n"; // Output the pressed key
 
     if(_guidance.key == 'm'){
-
+        sleep(5);
+        _motors.forwards(1750);
+        _motors.stop();
+        _motors.shoot();
+        _motors.forwards(1750);
+        _motors.stop();
+        _motors.right(790);
+        _motors.stop();
+        _motors.forwards(1750);
+        _motors.stop();
         _guidanceUpdateThread= std::thread(&CGuidance::updateThread, &_guidance);
         _guidanceThread= std::thread(&CGuidance::imageThread, &_guidance);
         _modeThread = std::thread(&CCar::modethrd, this, "manual");
@@ -185,8 +194,16 @@ void CCar::manuelMode(){
         _motors.stop();
         _guidance.isThreading = false;
     }else if(_guidance.key == 'x'){
-        //_guidance.key == ' ';
         _motors.cry();
+    }else if(_guidance.key == 'q'){// to shoot!
+        _motors.stop();
+        _guidance.isThreading = false;
+    }else if(_guidance.key == 'e'){//to turn left 90 degrees
+        int leftTurnDuration = 800;
+        _motors.right(leftTurnDuration);
+    }else if(_guidance.key == 'c'){// to turn right 90 degrees
+        int rightTurnDuration = 800;
+        _motors.left(rightTurnDuration);
     }
 
     if(_guidance.key == 'z'){// to shoot!

@@ -69,6 +69,7 @@ void CGuidance::update(){
             }else if(cmds.at(i) == "s"){
                 key= 's';
             }else if(cmds.at(i) == "a"){
+
                 key= 'a';
             }else if(cmds.at(i) == "d"){
                 key= 'd';
